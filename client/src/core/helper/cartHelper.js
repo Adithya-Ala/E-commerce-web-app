@@ -1,0 +1,52 @@
+import React from "react";
+
+export const addItemToCart = (item,next) => {
+    let cart = []
+    if(typeof window !== undefined) {
+        if(localStorage.getItem("cart")) {
+            cart = JSON.parse(localStorage.getItem("cart"))
+        }
+    }
+    
+    cart.push({
+        ...item,
+        count:1
+    })
+    localStorage.setItem("cart", JSON.stringify(cart))
+    next();
+}
+
+export const loadCart = () => {
+    let items = []
+    if(typeof window !== undefined) {
+        if(localStorage.getItem("cart")) {
+            items = JSON.parse(localStorage.getItem("cart"))
+        }
+    }
+    return items;
+}
+
+export const removeItemFromCart = (productId) => {
+    let cart = []
+    if(typeof window !== undefined) {
+        if(localStorage.getItem("cart")) {
+            cart = JSON.parse(localStorage.getItem("cart"))
+        }
+        cart.map((product, i) => {
+            if(product._id === productId) {
+                cart.splice(i, 1);
+            }
+        })
+        localStorage.setItem("cart",JSON.stringify(cart));
+    }
+    return cart;
+};
+
+
+
+export const cartEmpty = () => {
+	if (typeof window !== undefined) {
+		localStorage.removeItem("cart");
+	}
+};
+
